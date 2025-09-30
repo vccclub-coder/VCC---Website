@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background-color: #f8fafc;
+}
+
+.hero-banner img {
+  width: 100%;      /* Cho ảnh fill toàn bộ chiều ngang web */
+  height: auto;     /* Giữ đúng tỉ lệ, không bị méo */
+  display: block;   /* Xóa khoảng trắng dư thừa dưới ảnh */
+}
+
+/* Card kết quả */
+.result-card {
+  transition: all 0.3s ease;
+}
+.result-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Pulse animation */
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* === Tinh chỉnh tương tác chọn đáp án nhưng KHÔNG đổi script.js === */
+/* 1) Ẩn icon vòng tròn do script render */
+#options > div > div:first-child {
+  display: none !important;
+}
+
+/* 2) Đổi màu highlight từ xanh dương sang xanh lá (override Tailwind classes) */
+#options > div.border-blue-500 {
+  border-color: #16a34a !important; /* green-600 */
+}
+#options > div.bg-blue-50 {
+  background-color: #dcfce7 !important; /* green-100 */
+}
+#options > div:hover {
+  background-color: #f0fdf4 !important; /* green-50 */
+}
+
+/* (Tuỳ chọn) chữ trong option rõ hơn khi được chọn */
+#options > div.border-blue-500 span {
+  color: #064e3b; /* green-900 */
+  font-weight: 600;
+}
+/* Container */
+.logo-slider {
+  overflow: hidden;
+  background: #f8fafc; /* màu nền đồng bộ với web */
+  padding: 20px 0;
+}
+
+/* Track chạy ngang */
+.logo-track {
+  display: flex;
+  width: calc(250px * 14); /* 8 item = 4 gốc + 4 lặp */
+  animation: scroll 20s linear infinite;
+}
+
+/* Logo + Tên */
+.logo-item {
+  display: flex;
+  flex-direction: column; /* logo trên, chữ dưới */
+  align-items: center;
+  margin: 0 40px;
+}
+
+.logo-item img {
+  height: 150px;
+  max-width: 220px; 
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-item p {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
+  text-align: center;
+}
+
+/* Animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-90%);
+  }
+}
+.logo-slider-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.logo-slider-section p {
+  font-size: 1rem;
+  color: #4b5563; /* gray-600 */
+}
+
+.featured-events {
+  margin-top: 50px;
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #f9fafb;
+}
+
+.featured-events h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.event-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  border: none;
+  background: #e5e7eb;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.tab-button.active {
+  background-color: #16a34a;
+  color: white;
+}
+
+.event-content {
+  display: none;
+}
+
+.event-content.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* Slideshow - PHIÊN BẢN 3D MỚI */
+.slideshow {
+  position: relative;
+  max-width: 900px; /* Có thể giữ nguyên */
+  height: 400px; /* Cần chiều cao cố định để thấy hiệu ứng 3D */
+  margin: 0 auto 20px;
+  perspective: 1500px; /* Tạo không gian 3D */
+}
+
+.slide-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d; /* Giữ hiệu ứng 3D cho các slide con */
+}
+
+.slide {
+  position: absolute; /* Tất cả slide chồng lên nhau */
+  top: 10%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 40%; /* Kích thước của slide */
+  height: 80%;
+  opacity: 0; /* Mặc định ẩn đi */
+  transition: transform 0.7s ease, opacity 0.7s ease, z-index 0.7s ease;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Đảm bảo ảnh lấp đầy slide mà không bị méo */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Nút bấm trái/phải */
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 20; /* Luôn nổi lên trên */
+  border-radius: 50%;
+}
+
+.slide-btn.left { left: 10px; }
+.slide-btn.right { right: 10px; }
+
+/* Dấu chấm điều hướng */
+.dots-container {
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #16a34a; /* Màu xanh active */
+}
+/* ============================ */
+/* ✨ Style cho khung mô tả sự kiện */
+/* ============================ */
+
+.event-description {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto; /* Căn giữa */
+  background: #ffffff; /* Nền trắng để nổi bật */
+  padding: 25px 30px; /* Thêm khoảng trống bên trong khung */
+  border-radius: 12px; /* Bo góc đồng bộ với ảnh slide */
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ nhàng, tinh tế */
+  border: 1px solid #e5e7eb; /* Thêm một đường viền mỏng */
+  margin-top: 20px;
+  margin-bottom: 20px; /* Tạo khoảng cách với các dấu chấm ở trên */
+}
+
+.event-description p {
+  margin-bottom: 14px; /* Khoảng cách giữa các dòng thông tin */
+  line-height: 1.6; /* Giúp chữ dễ đọc hơn */
+  color: #374151; /* Màu chữ xám đậm */
+  font-size: 1rem;
+}
+
+.event-description p:last-child {
+  margin-bottom: 0; /* Bỏ khoảng cách của dòng cuối cùng */
+}
+
+.event-description strong {
+  color: #111827; /* Cho chữ in đậm có màu đen rõ ràng */
+  font-weight: 600;
+  margin-right: 5px; /* Tạo khoảng cách nhỏ với nội dung phía sau */
+}
